@@ -1,1 +1,27 @@
-<p>customers works!</p>
+<div class="container mt-2">
+    <div class="text-danger" *ngIf="errorMessage">
+        {{ errorMessage}}
+    </div>
+    <div class="card">
+        <div class="card-header">Customers list</div>
+        <div class="card-body">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Email</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <tr *ngFor="let customer of customers$ | async">
+                        <td>{{ customer.id }}</td>
+                        <td>{{ customer.name }}</td>
+                        <td>{{ customer.email }}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
