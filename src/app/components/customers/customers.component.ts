@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { Observable } from 'rxjs';
+import { FormBuilder, FormGroup } from '@angular/forms';
+import { catchError, Observable, throwError } from 'rxjs';
 import { Customer } from 'src/app/models/customer.interface';
 import { CustomerService } from 'src/app/services/customer.service';
 
@@ -14,11 +15,24 @@ export class CustomersComponent implements OnInit {
   customers$!: Observable<Customer[]>;
   //customers: any;
   errorMessage!: string;
+  searchFormGroup! : FormGroup;
 
-  constructor(private customerService: CustomerService) { }
+  constructor(private customerService: CustomerService, private formBuilder: FormBuilder) { }
 
   ngOnInit(): void {
-    this.customers$ = this.customerService.getCustomers();
+
+    this.searchFormGroup = this.formBuilder.group(
+      {
+        keyword: this.formBuilder.control("")
+      }
+    )
+
+    this.customers$ = this.customerService.getCustomers().pipe(
+      catchError(err => {
+        this.errorMessage = err.message
+        return throwError(() => new Error(err));
+      })
+    );
     /*this.customerService.getCustomers().subscribe({
       next: (data) => {
         this.customers = data;
@@ -27,6 +41,18 @@ export class CustomersComponent implements OnInit {
         this.errorMessage = err.message;
       }
     })*/
+  }
+
+  handleSearchForm(){
+
+    let searchKeyword = this.searchFormGroup.value.keyword;
+    this.customers$ =  this.customerService.searchCustomers(searchKeyword).pipe(
+      catchError(err => {
+        this.errorMessage =  err.message;
+        return throwError(() => new Error(err));
+      })
+    )
+
   }
 
 }
