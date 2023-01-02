@@ -1,0 +1,40 @@
+<ng-template #content let-modal>
+	<div class="modal-header">
+		<h4 class="modal-title" id="modal-basic-title">New Customer</h4>
+		<button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+	</div>
+	<div class="modal-body">
+		<form [formGroup]="newCustomerForm" (ngSubmit)="handleSaveCustomer()">
+			<div class="mb-3">
+                <label for="name">Name</label>
+				<div class="input-group">
+					<input
+						id="name"
+						class="form-control"
+						placeholder="customer name"
+                        formControlName="name"
+					/>
+				</div>                
+			</div>
+
+            <div class="mb-3">
+                <label for="email">Email</label>
+				<div class="input-group">
+					<input
+						id="email"
+						class="form-control"
+						placeholder="customer email"
+                        formControlName="email"
+					/>
+				</div>
+            </div>
+            
+		    <button type="submit" class="btn btn-outline-dark" (click)="modal.close('Save click')">Save</button>
+		</form>
+	</div>
+	<div class="modal-footer">
+		<button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')">Save</button>
+	</div>
+</ng-template>
+
+<button class="btn btn-lg btn-outline-primary" (click)="open(content)">Ajouter</button>

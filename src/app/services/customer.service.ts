@@ -18,4 +18,8 @@ export class CustomerService {
   searchCustomers(keyword: String):Observable<Customer[]>{
     return this.http.get<Customer[]>(`${environment.apiUrl}/customers/search?name=`+keyword)
   }
+
+  saveCustomer(customer: Customer): Observable<Customer>{
+    return this.http.post<Customer>(`${environment.apiUrl}/customers`,customer);
+  }
 }

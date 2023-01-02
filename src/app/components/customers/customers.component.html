@@ -1,13 +1,19 @@
 <div class="container mt-2">
     
     <div class="card">
-        <div class="card-header">Customers list</div>
+        <div class="card-header">
+            Customers list
+
+            <app-new-customer></app-new-customer>
+        </div>
         <div class="card-body">
             <form [formGroup]="searchFormGroup" (ngSubmit)="handleSearchForm()">
                 <div class="input-group">
                     <label class="input-group-text">Keyword:</label>
                     <input type="text" formControlName="keyword" class="form-control">
-                    <button class="btn btn-info">Search</button>
+                    <button class="btn btn-info">
+                        <i class="bi bi-search"></i>
+                    </button>
                 </div>
             </form>
             <ng-container *ngIf="customers$ |async as customers; else failureOrLoading">
