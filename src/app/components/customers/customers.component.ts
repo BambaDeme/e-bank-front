@@ -55,4 +55,14 @@ export class CustomersComponent implements OnInit {
 
   }
 
+  handleCreatedCustomer(){
+    console.log("handling customer creation");
+    this.customers$ = this.customerService.getCustomers().pipe(
+      catchError(err => {
+        this.errorMessage = err.message
+        return throwError(() => new Error(err));
+      })
+    );
+  }
+
 }

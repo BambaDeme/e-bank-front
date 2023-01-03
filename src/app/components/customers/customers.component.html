@@ -4,7 +4,7 @@
         <div class="card-header">
             Customers list
 
-            <app-new-customer></app-new-customer>
+            <app-new-customer (customerCreated)="handleCreatedCustomer()"></app-new-customer>
         </div>
         <div class="card-body">
             <form [formGroup]="searchFormGroup" (ngSubmit)="handleSearchForm()">
